@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Backend for CouponsWorth",
   "main": "app.js",
+  "engines": {
+    "node": "16.x"  // Specify the Node.js version here
+  },
   "scripts": {
     "start": "node app.js"
   },
