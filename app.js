@@ -7,7 +7,6 @@ const path = require('path');
 const upload = require('./config/multerConfig');
 const http = require('http');
 
-
 // Importing routes
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
@@ -22,13 +21,19 @@ connectDB();
 
 const app = express();
 
-// Configure CORS to allow requests from the frontend
+// Configure CORS to allow requests from frontend
 const corsOptions = {
-  origin: 'https://getcouponsfrontend.vercel.app/', 
-  origin: 'http://localhost:3000', // The domain of your frontend
-  methods: 'GET, POST,DELETE,UPDATE,PUT', // Add other methods if needed
+  origin: (origin, callback) => {
+    // Allow your frontend URLs and localhost for development
+    if (origin === 'https://getcouponsfrontend.vercel.app' || origin === 'http://localhost:3000' || !origin) {
+      callback(null, true); // allow the request
+    } else {
+      callback(new Error('Not allowed by CORS'), false); // reject the request
+    }
+  },
+  methods: 'GET, POST, DELETE, UPDATE, PUT',
   allowedHeaders: 'Content-Type, Authorization', // Customize as needed
-}; 
+};
 
 app.use(cors(corsOptions)); // Enable CORS with the specified options
 
@@ -59,12 +64,6 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 // Middleware for handling 404 errors and general error handling
 app.use(notFound);
 app.use(errorHandler);
-
-// Serve the frontend app for non-API routes
-// app.use(express.static(path.join(__dirname, 'frontend', 'build')));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
-// });
 
 // At the end of your routes in app.js
 app.get('/', (req, res) => {
