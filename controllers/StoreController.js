@@ -33,6 +33,7 @@ const getStoreByName = async (req, res) => {
   }
 };
 
+// controllers/StoreController.js
 const createStore = async (req, res) => {
   try {
     const {
@@ -41,6 +42,7 @@ const createStore = async (req, res) => {
       url,
       description,
       category,
+      categoryIconUrl, // Accept categoryIconUrl from request body
       tags,
       status,
       rating,
@@ -65,7 +67,7 @@ const createStore = async (req, res) => {
       coupons,
       featuredCoupons,
       recommendedCoupons,
-      isTrending, // Add isTrending here
+      isTrending,
     } = req.body;
 
     if (!name || !url) {
@@ -85,6 +87,7 @@ const createStore = async (req, res) => {
       url,
       description,
       category,
+      categoryIconUrl, // Add it to the new store object
       tags,
       status,
       rating,
@@ -109,7 +112,7 @@ const createStore = async (req, res) => {
       coupons,
       featuredCoupons,
       recommendedCoupons,
-      isTrending, // Add isTrending to the new store object
+      isTrending,
     });
 
     await newStore.save();
@@ -180,6 +183,7 @@ const updateStore = async (req, res) => {
       url,
       description,
       category,
+      categoryIconUrl, // Include categoryIconUrl in the update
       tags,
       status,
       rating,
@@ -204,7 +208,7 @@ const updateStore = async (req, res) => {
       coupons,
       featuredCoupons,
       recommendedCoupons,
-      isTrending, // Add isTrending here
+      isTrending,
     } = req.body;
 
     const updatedStore = await Store.findByIdAndUpdate(
@@ -215,6 +219,7 @@ const updateStore = async (req, res) => {
         url,
         description,
         category,
+        categoryIconUrl, // Add it here
         tags,
         status,
         rating,
@@ -239,7 +244,7 @@ const updateStore = async (req, res) => {
         coupons,
         featuredCoupons,
         recommendedCoupons,
-        isTrending, // Include isTrending in the update
+        isTrending,
       },
       { new: true, runValidators: true }
     );

@@ -7,6 +7,7 @@ const path = require('path');
 const upload = require('./config/multerConfig');
 const http = require('http');
 
+
 // Importing routes
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
@@ -23,10 +24,11 @@ const app = express();
 
 // Configure CORS to allow requests from the frontend
 const corsOptions = {
-  origin: 'https://coupenworth-frontend.vercel.app', // The domain of your frontend
-  methods: 'GET, POST', // Add other methods if needed
+  // origin: 'https://coupenworth-frontend.vercel.app', // The domain of your frontend
+  origin: 'http://localhost:3000', // The domain of your frontend
+  methods: 'GET, POST,DELETE,UPDATE,PUT', // Add other methods if needed
   allowedHeaders: 'Content-Type, Authorization', // Customize as needed
-};
+}; 
 
 app.use(cors(corsOptions)); // Enable CORS with the specified options
 
