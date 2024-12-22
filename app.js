@@ -24,7 +24,7 @@ const app = express();
 
 // Configure CORS to allow requests from the frontend
 const corsOptions = {
-  // origin: 'https://coupenworth-frontend.vercel.app', // The domain of your frontend
+  origin: 'https://getcouponsfrontend.vercel.app/', 
   origin: 'http://localhost:3000', // The domain of your frontend
   methods: 'GET, POST,DELETE,UPDATE,PUT', // Add other methods if needed
   allowedHeaders: 'Content-Type, Authorization', // Customize as needed
