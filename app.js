@@ -21,18 +21,15 @@ connectDB();
 
 const app = express();
 
-// Configure CORS to allow requests from the frontend
+// Configure CORS to allow requests from everywhere
 const corsOptions = {
-  origin: [
-    'https://getcouponsfrontend.vercel.app', // Frontend production URL
-    'http://localhost:3000',                // Local development
-  ],
+  origin: '*', // Allow requests from any origin
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'],   // Allowed headers
-  credentials: true,                                   // Allow credentials (e.g., cookies)
+  credentials: false,                                  // Do not use credentials with '*'
 };
 
-app.use(cors(corsOptions)); // Enable CORS globally with the specified options
+app.use(cors(corsOptions)); // Enable CORS globally
 
 // Body parser middleware
 app.use(express.json());
