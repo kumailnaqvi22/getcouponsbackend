@@ -21,22 +21,20 @@ connectDB();
 
 const app = express();
 
-// Configure CORS to allow requests from frontend
+// Configure CORS to allow requests from the frontend
 const corsOptions = {
-  origin: (origin, callback) => {
-    // Allow your frontend URLs and localhost for development
-    if (origin === 'https://getcouponsfrontend.vercel.app' || origin === 'http://localhost:3000' || !origin) {
-      callback(null, true); // allow the request
-    } else {
-      callback(new Error('Not allowed by CORS'), false); // reject the request
-    }
-  },
-  methods: 'GET, POST, DELETE, UPDATE, PUT',
-  allowedHeaders: 'Content-Type, Authorization', // Customize as needed
+  origin: [
+    'https://getcouponsfrontend.vercel.app', // Frontend production URL
+    'http://localhost:3000',                // Local development
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],   // Allowed headers
+  credentials: true,                                   // Allow credentials (e.g., cookies)
 };
 
-app.use(cors(corsOptions)); // Enable CORS with the specified options
+app.use(cors(corsOptions)); // Enable CORS globally with the specified options
 
+// Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -65,7 +63,7 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-// At the end of your routes in app.js
+// Root endpoint
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to CouponWorth Backend');
 });
